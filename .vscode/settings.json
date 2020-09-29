@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "${workspaceFolder:si_mandatory_assignment_1}/NemID_ESB/nem_id_database.sqlite",
+            "driver": "SQLite",
+            "name": "nem_id",
+            "previewLimit": 50
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
