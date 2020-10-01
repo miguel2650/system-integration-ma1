@@ -4,6 +4,8 @@ from starlette.responses import RedirectResponse
 from pydantic import BaseModel
 
 import json
+# Run command:
+# uvicorn password_generator:app --host 127.0.0.1 --port 8089
 
 
 class User(BaseModel):

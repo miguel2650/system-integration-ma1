@@ -15,16 +15,25 @@ app.post("/nemid-auth", (req, res) => {
   let nemId = req.body.nemId;
   console.log("nemIdCode", nemIdCode);
   console.log("nemId", nemId);
-  db.run("select * from User", (err) => {
-    if (err) {
-      console.log(err);
+  db.get("select * from user where user.NemID = ?", [nemId], (err, row) => {
+    console.log("row:", row);
+    if (err || row === undefined) {
+      res.status(403).send({ error: err });
     } else {
       // Will generate array
       let randomDigits = [];
       for (var i = 0; i < 6; i++) {
         randomDigits.push(Math.floor(Math.random() * 9) + 1);
       }
-      return res.status(200).send({ generatedCode: randonmDigits.join("") });
+      randomDigits = randomDigits.join("");
+
+      let query = "INSERT INTO auth_log(UserId, Code) VALUES(?,?)";
+      db.run(query, [row.Id, randomDigits], (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      res.status(200).send({ generatedCode: randomDigits });
     }
   });
 });
